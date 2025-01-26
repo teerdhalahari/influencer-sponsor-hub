@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Campaign</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+      }
+      h1 {
+        color: #333;
+      }
+      form {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      div {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      input[type="date"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+      span {
+        display: block;
+        color: red;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Create New Campaign</h1>
+    <form method="POST" action="{{ url_for('create_campaign') }}">
+      {{ form.hidden_tag() }}
+      <div>
+        <label for="name">Name:</label>
+        {{ form.name(size=50) }} {% for error in form.name.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        {{ form.status }} {% for error in form.status.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div>
+        <label for="start_date">Start Date:</label>
+        {{ form.start_date }} {% for error in form.start_date.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div>
+        <label for="end_date">End Date:</label>
+        {{ form.end_date }} {% for error in form.end_date.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div>
+        <label for="budget">Budget:</label>
+        {{ form.budget }} {% for error in form.budget.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div>
+        <input type="submit" value="Create Campaign" />
+      </div>
+    </form>
+  </body>
+</html>

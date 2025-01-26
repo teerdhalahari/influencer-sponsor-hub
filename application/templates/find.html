@@ -1,0 +1,313 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container-fluid" style="padding: 20px">
+  <h1 class="mt-4" style="font-weight: bold; color: #333">Find Campaigns</h1>
+
+  <!-- Admin Section -->
+  {% if current_user.role == 'admin' %}
+  <h2 class="mt-4" style="font-weight: bold; color: #007bff">Admin View</h2>
+  <!-- Search and Filter Form for Admin -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search Campaigns"
+          aria-label="Search"
+          style="
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f9fa;
+          "
+        />
+        <select
+          class="form-select me-2"
+          aria-label="Filter by status"
+          style="
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f9fa;
+          "
+        >
+          <option selected>Filter by Status</option>
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+          <option value="flagged">Flagged</option>
+        </select>
+        <button
+          class="btn btn-outline-primary"
+          type="submit"
+          style="
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+          "
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Campaign Listings for Admin -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <h3 style="font-weight: bold; color: #28a745">Campaigns</h3>
+      <div class="list-group">
+        {% for campaign in campaigns %}
+        <div
+          class="list-group-item list-group-item-action"
+          style="
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+          "
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1" style="font-weight: bold; color: #333">
+              {{ campaign.name }}
+            </h5>
+            <small style="color: #6c757d">{{ campaign.status }}</small>
+          </div>
+          <p class="mb-1">{{ campaign.details }}</p>
+          <form
+            action="{{ url_for('flag_campaign', campaign_id=campaign.id) }}"
+            method="post"
+          >
+            <button
+              class="btn btn-sm btn-danger"
+              style="
+                border-radius: 5px;
+                padding: 5px 10px;
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+              "
+            >
+              Flag
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Influencer Section -->
+  {% if current_user.role == 'influencer' %}
+  <h2 class="mt-4" style="font-weight: bold; color: #17a2b8">
+    Influencer View
+  </h2>
+  <!-- Search and Filter Form for Influencer -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search Campaigns"
+          aria-label="Search"
+          style="
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f9fa;
+          "
+        />
+        <button
+          class="btn btn-outline-primary"
+          type="submit"
+          style="
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #17a2b8;
+            color: #fff;
+            border-color: #17a2b8;
+          "
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Campaign Listings for Influencer -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <h3 style="font-weight: bold; color: #ffc107">Campaigns</h3>
+      <div class="list-group">
+        {% for campaign in campaigns %}
+        <div
+          class="list-group-item list-group-item-action"
+          style="
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+          "
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1" style="font-weight: bold; color: #333">
+              {{ campaign.name }}
+            </h5>
+            <small style="color: #6c757d">{{ campaign.status }}</small>
+          </div>
+          <p class="mb-1">{{ campaign.details }}</p>
+          <button
+            class="btn btn-sm btn-primary"
+            style="
+              border-radius: 5px;
+              padding: 5px 10px;
+              background-color: #007bff;
+              color: #fff;
+              border: none;
+            "
+          >
+            Request
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Sponsor Section -->
+  {% if current_user.role == 'sponsor' %}
+  <h2 class="mt-4" style="font-weight: bold; color: #28a745">Sponsor View</h2>
+
+  <!-- Search and Filter Form for Sponsor -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search Campaigns"
+          aria-label="Search"
+          style="
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f9fa;
+          "
+        />
+        <button
+          class="btn btn-outline-primary"
+          type="submit"
+          style="
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border-color: #28a745;
+          "
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Campaign Listings for Sponsor -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <h3 style="font-weight: bold; color: #007bff">Campaigns</h3>
+      <div class="list-group">
+        {% for campaign in campaigns %}
+        <div
+          class="list-group-item list-group-item-action"
+          style="
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+          "
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h3 class="mb-1" style="font-weight: bold; color: #333">
+              {{ campaign.name }}
+            </h3>
+            <h4 style="color: #b7426b">{{ campaign.status }}</h4>
+          </div>
+          <p class="mb-1">{{ campaign.details }}</p>
+          <a
+            href="#"
+            class="btn btn-sm btn-success"
+            style="
+              border-radius: 2px;
+              padding: 2px 4px;
+              background-color: #28a745;
+              color: #fff;
+              border: none;
+            "
+            >View</a
+          >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Influencers Section -->
+  <div class="row mt-4">
+    <div class="col-lg-12">
+      <h3 style="font-weight: bold; color: #007bff">Influencers</h3>
+      <div class="list-group">
+        {% for influencer in influencers %}
+        <div
+          class="list-group-item list-group-item-action"
+          style="
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+          "
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h3 class="mb-1" style="font-weight: bold; color: #333">
+              {{ influencer.username }}
+            </h3>
+            <h4 style="color: #b7426b">{{ influencer.email }}</h4>
+            <h4 style="color: #b7426b">{{ influencer.platform }}</h4>
+            <h4 style="color: #b7426b">{{ influencer.role }}</h4>
+          </div>
+          <form
+            method="POST"
+            action="{{ url_for('create_ad_request', campaign_id=campaigns[0].id) }}"
+          >
+            <input
+              type="hidden"
+              name="influencer_id"
+              value="{{ influencer.id }}"
+            />
+            <button
+              type="submit"
+              class="btn btn-sm btn-success"
+              style="
+                border-radius: 2px;
+                padding: 2px 4px;
+                background-color: #28a745;
+                color: #fff;
+                border: none;
+              "
+            >
+              Send Request
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

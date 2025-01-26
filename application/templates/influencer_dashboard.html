@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Influencer Dashboard</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav {
+        width: 100%;
+        background-color: #28a745;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      nav ul li {
+        margin: 0 15px;
+      }
+
+      nav ul li a {
+        color: #ffffff;
+        text-decoration: none;
+        padding: 15px 20px;
+        display: block;
+      }
+
+      nav ul li a:hover {
+        background-color: #218838;
+        border-radius: 5px;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 800px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #343a40;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .dashboard-content {
+        text-align: left;
+      }
+
+      .dashboard-content h2 {
+        color: #28a745;
+        font-size: 1.5rem;
+        margin-top: 20px;
+      }
+
+      .dashboard-content p {
+        color: #6c757d;
+        font-size: 1.2rem;
+      }
+
+      .dashboard-content ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .dashboard-content li {
+        background-color: #e9ecef;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+        <li><a href="{{ url_for('find') }}">Find</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Welcome, {{ current_user.username }}!</h1>
+      <div class="dashboard-content">
+        <h2>Campaigns</h2>
+        <ul>
+          {% for campaign in campaigns %}
+          <li>{{ campaign.name }} - {{ campaign.status }}</li>
+          {% endfor %}
+        </ul>
+
+        <h2>New Requests</h2>
+        <ul>
+          {% for request in new_requests %}
+          <li>{{ request.message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

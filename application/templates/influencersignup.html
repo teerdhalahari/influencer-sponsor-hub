@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <center><h1 class="display-3">Influencer Signup</h1></center>
+  <form method="POST" class="form-register">
+    {{ form.hidden_tag() }}
+    <br />
+    {{ form.username.label }} {{ form.username(size=32, class_='form-control',
+    placeholder='Username') }}
+    <br />
+    {{ form.email.label }} {{ form.email(size=32, class_='form-control',
+    placeholder='Email') }}
+    <br />
+    {{ form.password.label }} {{ form.password(size=32, class_='form-control',
+    placeholder='Password') }}
+    <br />
+    {{ form.confirm_password.label }} {{ form.confirm_password(size=32,
+    class_='form-control', placeholder='Confirm Password') }}
+    <br />
+    <label for="platform">Select Platform Presence:</label>
+    <br />
+    {{ form.platform }}
+    <br />
+    {{ form.submit(class_='btn btn-primary') }}
+  </form>
+</div>
+{% endblock %}

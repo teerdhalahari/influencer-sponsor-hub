@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campaigns</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      .campaign {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .campaign h2 {
+        margin-top: 0;
+      }
+      .campaign p {
+        margin-bottom: 10px;
+      }
+      .actions {
+        margin-top: 20px;
+      }
+      .actions a,
+      .actions button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+        display: inline-block;
+      }
+      .actions a:hover,
+      .actions button:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Campaigns</h1>
+
+    <!-- Actions to create new campaign -->
+    <div class="actions">
+      {% if current_user.role == 'sponsor' %}
+      <!-- Link to create new campaign -->
+      <a href="{{ url_for('create_campaign') }}">Create New Campaign</a>
+      {% endif %}
+      <a href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+
+    <!-- List of campaigns -->
+    {% for campaign in campaigns %}
+    <div class="campaign">
+      <h2>{{ campaign.name }}</h2>
+      <p>Status: {{ campaign.status }}</p>
+      <p>Start Date: {{ campaign.start_date }}</p>
+      <p>End Date: {{ campaign.end_date }}</p>
+      <p>Budget: ${{ campaign.budget }}</p>
+      {% if current_user.role == 'sponsor' %}
+      <!-- Link to create new ad request for this campaign -->
+      <div>
+        <a href="{{ url_for('create_ad_request', campaign_id=campaign.id) }}"
+          >Create Ad Request for this Campaign</a
+        >
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </body>
+</html>

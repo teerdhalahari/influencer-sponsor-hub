@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <!-- Bootstrap CSS link -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: auto;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+
+      h1 {
+        color: #28a745;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #343a40;
+        font-size: 1.75rem;
+        margin-top: 20px;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 10px;
+      }
+
+      p {
+        color: #6c757d;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #e9ecef;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        word-wrap: break-word;
+      }
+
+      .campaign-box {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+      }
+
+      .campaign-box h3 {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .campaign-box h4 {
+        color: #b7426b;
+        margin: 0; /* Ensure no extra margin for h4 elements */
+      }
+
+      .campaign-box div {
+        margin-bottom: 10px; /* Add spacing between elements inside the box */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      {% if current_user.role == 'influencer' %}
+      <h1>Influencer Profile</h1>
+      <p><strong>Rating:</strong> {{ rating }}</p>
+      <p><strong>Earnings This Month:</strong> ${{ earnings }}</p>
+      <h2>Campaigns</h2>
+      <ul>
+        {% for campaign in campaigns %}
+        <li class="campaign-box">
+          <div>
+            <h3>{{ campaign.name }}</h3>
+            <h4>Description: {{ campaign.description }}</h4>
+            <h4>Start Date: {{ campaign.start_date }}</h4>
+            <h4>End Date: {{ campaign.end_date }}</h4>
+            <h4>Budget: ${{ campaign.budget }}</h4>
+            <h4>Status: {{ campaign.status }}</h4>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <h2>New Requests</h2>
+      <ul>
+        {% for request in new_requests %}
+        <li>{{ request.message }}</li>
+        {% endfor %}
+      </ul>
+      {% elif current_user.role == 'admin' %}
+      <h1>Admin Profile</h1>
+      <h2>Ongoing Campaigns</h2>
+      <ul>
+        {% for campaign in campaigns %}
+        <li>{{ campaign.name }}</li>
+        {% endfor %}
+      </ul>
+      <h2>Flagged Campaigns</h2>
+      <ul>
+        {% for campaign in flagged_campaigns %}
+        <li>{{ campaign.name }}</li>
+        {% endfor %}
+      </ul>
+      <h2>New Requests</h2>
+      <ul>
+        {% for request in new_requests %}
+        <li>{{ request.message }}</li>
+        {% endfor %}
+      </ul>
+      {% elif current_user.role == 'sponsor' %}
+      <h1>Sponsor Profile</h1>
+      <h2>Active Campaigns</h2>
+      <ul>
+        {% for campaign in active_campaigns %}
+        <li>{{ campaign.name }}</li>
+        {% endfor %}
+      </ul>
+      <h2>New Requests</h2>
+      <ul>
+        {% for request in new_requests %}
+        <li>{{ request.message }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-danger">Error: Unauthorized access!</p>
+      {% endif %}
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

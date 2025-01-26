@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    max-width: 500px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    color: #343a40;
+    font-size: 2.5rem;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #495057;
+  }
+
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+  h4 {
+    margin-top: 20px;
+    color: #495057;
+    font-size: 1.2rem;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1rem;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+
+  .text-danger {
+    margin-top: 5px;
+    font-size: 0.9rem;
+  }
+
+  .form-check-label {
+    font-size: 1rem;
+  }
+</style>
+
+<div class="container">
+  <h1>Login Page</h1>
+  <form method="POST" action="{{ url_for('login') }}">
+    {{ form.hidden_tag() }} {# Include the CSRF token here #}
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }} {{
+      form.username(class="form-control", placeholder="Username", required=True)
+      }} {% for error in form.username.errors %}
+      <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+    <div class="mb-3">
+      {{ form.password.label(class="form-label") }} {{
+      form.password(class="form-control", placeholder="Password", required=True)
+      }} {% for error in form.password.errors %}
+      <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+    <div class="mb-3 form-check">
+      {{ form.remember_me(class="form-check-input") }} {{
+      form.remember_me.label(class="form-check-label") }}
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary" />
+    <h4>Don't have an account?</h4>
+    <a href="{{ url_for('influencer_signup') }}">Signup as Influencer</a>
+    <br />
+    <a href="{{ url_for('sponsor_signup') }}">Signup as Sponsor</a>
+  </form>
+</div>
+{% endblock %}
